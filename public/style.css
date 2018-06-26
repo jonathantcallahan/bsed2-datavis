@@ -1,4 +1,16 @@
+* {
+    box-sizing: border-box
+}
 
+#chart > div {
+    font-size: 4px; 
+    font-family: sans-serif;
+    background-color: steelblue;
+    text-align: right;
+    margin: 4px;
+    padding: 2px;
+    color: white
+}
 
 #box {
     width:100px;
