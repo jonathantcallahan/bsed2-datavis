@@ -23,6 +23,25 @@ d3.select('#box')
     
 const data = [12,44,23,55,23,53,12,12,44,52,62,88]
 
+const svgWidth = 500, svgHeight = 300, barPadding = 5;
+const barWidth = (svgWidth / data.length);
+
+const svg = d3.select('svg')
+    .attr('width', svgWidth)
+    .attr('height',svgHeight);
+
+const barChart = svg.selectAll('rect')
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('y', d => { return svgHeight - d})
+    .attr('height', d => { return d})
+    .attr('width', barWidth - barPadding)
+    .attr('transform', (d,i) => {
+        const translate = [barWidth * i, 0];
+        return `translate(${translate})`;
+    })
+
 d3.select('#chart')
     .selectAll('div')
     .data(data)
