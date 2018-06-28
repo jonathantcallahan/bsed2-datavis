@@ -1,40 +1,24 @@
 
-
-d3.selectAll('li')
-    .data([2,5,6,12,123,5,33])
-        .style('font-size', d => { return `${d}px`});
-
-d3.select('#box')
-    .on('mouseover', () => {
-        console.log('mouseover')
-        d3.select('#box')
-            .transition()
-            .duration(500)
-            .style('background-color','black')
-            .style('height','4px')
-    })
-    .on('mouseout', () => {
-        d3.select('#box')
-            .transition()
-            .duration(500)
-            .style('background-color','white')
-            .style('height','100px')
-    })
     
 const data = [12,44,23,55,23,53,12,12,44,52,62,88]
+const data2 = [2,3,4,5,1 ]
 
 const svgWidth = 500, svgHeight = 300, barPadding = 5;
-const barWidth = (svgWidth / data.length);
+const barWidth = (svgWidth / data2.length);
 
 const svg = d3.select('svg')
     .attr('width', svgWidth)
     .attr('height',svgHeight);
 
+const yScale = d3.scaleLinear()
+.domain([0, d3.max(data2)])
+.range([0, svgHeight])
+
 const barChart = svg.selectAll('rect')
-    .data(data)
+    .data(data2)
     .enter()
     .append('rect')
-    .attr('y', d => { return svgHeight - d})
+    .attr('y', d => { return svgHeight - yScale})
     .attr('height', d => { return d})
     .attr('width', barWidth - barPadding)
     .attr('transform', (d,i) => {
@@ -42,12 +26,11 @@ const barChart = svg.selectAll('rect')
         return `translate(${translate})`;
     })
 
-d3.select('#chart')
-    .selectAll('div')
-    .data(data)
-        .enter()
-        .append('div')
-        .style('width', d => { return d + 'px'})
-        .text(d => { return d })
-
-
+const text = svg.selectAll('text')
+    .data(data2)
+    .enter()
+    .append('text')
+    .text(d => { return d })
+    .attr('y', (d, i) => { return svgHeight -yScale -2 })
+    .attr('x', (d, i) => { return barWidth * i })
+    .attr('fill','#A64c38')
